@@ -1,0 +1,10 @@
+gitignore
+*.o
+*.out
+*.so
+
+#
+.vscode/
+.idea/
+
+.DS_Store
