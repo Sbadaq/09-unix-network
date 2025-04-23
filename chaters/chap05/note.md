@@ -83,7 +83,8 @@ if(errno != EAGAIN)
 
  sigprocmask(SIG_UNBLOCK, &newmask, NULL);
 ```
-`读完消息再次把队列打开（why ?? `
+`为什么读完消息再次把队列打开（why ?? `
+
 **阻塞信号的原因**
 - 在这段代码中，sigprocmask(SIG_BLOCK, &newmask, &oldmask); 这一行代码将 SIGUSR1 信号添加到信号掩码中，从而阻塞了该信号。
 - 阻塞信号的主要目的是为了确保在处理信号相关的操作时，不会被其他信号干扰。例如，在 sigsuspend 函数调用期间，程序会暂停执行，等待信号的到来。如果此时不阻塞 SIGUSR1 信号，可能会导致信号被多次处理或处理顺序混乱。
