@@ -1,5 +1,3 @@
-#include <bits/mqueue.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,8 +5,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <errno.h>
-#include <bits/sigevent-consts.h>
+
 
 mqd_t mqd;
 void *buff;
