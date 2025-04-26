@@ -116,3 +116,11 @@ signal_rt
 ### 5.8.8 mq_receive函数
 
 
+## 5.4 posix消息队列的消息读写
+mq_send函数用于向消息队列中发送消息。
+mq_receive函数用于从消息队列中接收消息。
+
+## 5.5 posix消息队列的结构体
+
+## 5.6 posix消息队列的通知
+my_notify函数用于设置消息队列的通知。

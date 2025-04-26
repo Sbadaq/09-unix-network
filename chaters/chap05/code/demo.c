@@ -3,6 +3,7 @@
 #include <string.h>
 #include <fcntl.h>
 
+/** send and receive msg in a mq */
 int main(int argc, char *argv[])
 {
     struct mq_attr attr = {.mq_maxmsg = 10, .mq_msgsize = 1024};

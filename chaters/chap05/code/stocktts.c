@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     const char *mq_name = "/test";
 
     // 删除现有的消息队列
-    mq_unlink(mq_name);
+    //mq_unlink(mq_name);
 
     struct mq_attr attr = {
         .mq_flags = 0,
