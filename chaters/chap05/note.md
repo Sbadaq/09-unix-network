@@ -102,6 +102,10 @@ if(errno != EAGAIN)
 
 ## 5.7 posix 实时信号
 signal_rt
+如今多数 Unix 系统支持 Posix 可靠信号，部分新系统逐步提供 Posix 实时信号。
+- Posix 信号分类
+** 实时信号：值在 SIGRTMIN 和 SIGRTMAX 之间（含两端），Posix 要求至少提供 RTSIG_MAX 种实时信号，其最小值为 8 。如 Solaris 2.6 上实时信号值为 38 - 45 ；Digital Unix 4.0B 上为 33 - 48 ，且两者都将 SIGRTMIN 和 SIGRTMAX 定义为可通过 sysconf 宏修改的值。
+** 其他信号：如 SIGALRM、SIGINT、SIGKILL 等
 
 ## 5.8 使用内存映射io实现posix消息队列
 第七章介绍 互斥锁和条件变量，第13章介绍内存映射io。可以先阅读过这2章再阅读本章。
