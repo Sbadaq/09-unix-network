@@ -57,7 +57,8 @@ int main(int argc, char *argv[]) {
             perror("sigemptyset");
             return 1;
         }
-        // 添加要阻塞的信号
+        // 添加要阻塞的信号，为了在后续的代码中通过 sigprocmask 函数阻塞这些信号，从而防止子进程在处理这些信号之前接收到它们。
+        //这种操作在需要精确控制信号处理的场景中非常常见，例如在实现信号驱动的异步事件处理时。
         if (sigaddset(&mask, SIGRTMAX) == -1 ||
             sigaddset(&mask, SIGRTMAX - 1) == -1 ||
             sigaddset(&mask, SIGRTMAX - 2) == -1) {
@@ -70,7 +71,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        // 注册信号处理函数
+        // 注册信号处理函数,三种实时信号的处理函数
         if (signal_rt(SIGRTMAX, sig_rt, &mask) == SIG_ERR ||
             signal_rt(SIGRTMAX - 1, sig_rt, &mask) == SIG_ERR ||
             signal_rt(SIGRTMAX - 2, sig_rt, &mask) == SIG_ERR) {
