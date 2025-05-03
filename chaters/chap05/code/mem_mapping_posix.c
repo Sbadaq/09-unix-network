@@ -18,25 +18,25 @@
 
 // 假设的结构体定义
 struct mq_hdr {
-    struct mq_attr mqh_attr;
-    int mqh_nwait;
+    struct mq_attr mqh_attr;//最大消息数，消息大小等；
+    int mqh_nwait;//等待消息的进程数；
     pid_t mqh_pid;
     long mqh_head;
     long mqh_free;
-    pthread_mutex_t mqh_lock;
-    pthread_cond_t mqh_wait;
-    struct sigevent mqh_event;
+    pthread_mutex_t mqh_lock;//互斥锁，用于保护队列的头和尾指针等；避免多线程竞争
+    pthread_cond_t mqh_wait;//条件变量，用于等待消息的到来（同步）；实现阻塞等待
+    struct sigevent mqh_event;//异步通知结构
 };
 
 struct msg_hdr {
-    long msg_next;
-    long msg_prev;
-    unsigned int msg_prio;
+    long msg_next;//双向链表指针
+    long msg_prev;//双向链表指针
+    unsigned int msg_prio;//消息优先级 
     size_t msg_len;
 };
 
 struct mq_info {
-    struct mq_hdr *mqi_hdr;
+    struct mq_hdr *mqi_hdr;//指向队列头部的指针
     int mqi_magic;
     int mqi_flags;
 };
@@ -125,7 +125,7 @@ again:
             return -1;
         }
 
-        printf("%d,mmap\n",__LINE__);
+        printf("%d,mmap 映射到共享内存\n",__LINE__);
         mptr = (int8_t*)mmap(NULL, filesize, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
         if (mptr == MAP_FAILED) {
             printf("%d,error: %s\n", __LINE__, strerror(errno));
@@ -142,7 +142,7 @@ again:
         mqinfo->mqi_hdr = mqhdr = (struct mq_hdr *)mptr;
         mqinfo->mqi_magic = MQI_MAGIC;
         mqinfo->mqi_flags = nonblock;
-
+        //初始化mqhdr 
         mqhdr->mqh_attr.mq_flags = 0;
         mqhdr->mqh_attr.mq_maxmsg = attr->mq_maxmsg;
         mqhdr->mqh_attr.mq_msgsize = attr->mq_msgsize;
